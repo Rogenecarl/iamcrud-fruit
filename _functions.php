@@ -100,3 +100,43 @@ function deleteFruit($fruitId){
         return false;
     }
 }
+
+function searchFruits($searchText)
+{
+    $statement = dbConnection()->prepare("SELECT
+                                        *
+                                        FROM
+                                        fruits
+                                        WHERE
+                                        fruit_name LIKE :fruit_name
+                                        ORDER BY
+                                        fruit_name
+                                        ASC");
+    $statement->execute([
+        'fruit_name' => "%$searchText%"
+    ]);
+
+    return $statement;
+}
+
+function searchFruitsCount($searchText)
+{
+    $statement = dbConnection()->prepare("SELECT
+                                        *
+                                        FROM
+                                        fruits
+                                        WHERE
+                                        fruit_name LIKE :fruit_name
+                                        ORDER BY
+                                        fruit_name
+                                        ASC");
+    $statement->execute([
+        'fruit_name' => "%$searchText%"
+    ]);
+
+    $count = $statement->rowCount();
+
+    return $statement;
+}
+
+?>
